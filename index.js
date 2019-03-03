@@ -1,14 +1,27 @@
 console.log('Before');
-const user = getUser(1)
-console.log(user); //undefined for now
+
+getUser(1, function(user){
+  console.log('user:', user);
+
+  // and get the user repos
+  getRepos(user.name, (repos) => {
+    console.log('User repos:', repos);
+  })
+})
+
 console.log('After');
 
-// callbacks
-// promises-async/await
-
-function getUser(id){
+function getUser(id, callback){
   setTimeout(() => {
     console.log('reading db for user...');
-    return { id, user:"Connor" }
-  }, 1000) //doesnt block, pass itself through
+    callback({ id, name:"Connor" })
+  }, 1000)
+
+}
+
+function getRepos(user, callback){
+  setTimeout(() => {
+    console.log('getting repos');
+    callback(['repo1', 'repo2', 'repo3'])
+  }, 1000);
 }
