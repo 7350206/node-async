@@ -1,15 +1,20 @@
 console.log('Before');
 
-getUser(1, function(user){
-  console.log('user:', user);
+// process anon callback functions to named functions
 
-  // and get the user repos
-  getRepos(user.name, (repos) => {
-    console.log('User repos:', repos);
-  })
-})
+getUser(1, getUserName)
 
 console.log('After');
+
+function getUserName(user){
+  console.log('User:', user);
+  getRepos(user.name, getUserRepos)
+}
+
+function getUserRepos(repos){
+  console.log('User Repos:', repos);
+}
+
 
 function getUser(id, callback){
   setTimeout(() => {
